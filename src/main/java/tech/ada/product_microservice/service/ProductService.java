@@ -1,9 +1,13 @@
 package tech.ada.product_microservice.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import tech.ada.product_microservice.dto.ProductDTO;
+import tech.ada.product_microservice.mapper.ProductMapper;
 import tech.ada.product_microservice.model.Product;
 import tech.ada.product_microservice.repository.ProductRepository;
 
@@ -14,7 +18,9 @@ import java.util.List;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final ProductMapper productMapper;
 
+    @Cacheable("produtos")
     public List<Product> allProducts() {
         return this.productRepository.findAll();
     }
@@ -27,8 +33,9 @@ public class ProductService {
         return this.productRepository.findBySku(sku);
     }
 
-    public Product create(Product product) {
-        return this.productRepository.save(product);
+    public ProductDTO create(ProductDTO productDTO) {
+        Product product = this.productMapper.toEntity(productDTO);
+        return this.productMapper.toDTO(this.productRepository.save(product));
     }
 
     public Product partialUpdate(Long sku, Product product) {

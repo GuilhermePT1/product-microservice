@@ -1,11 +1,13 @@
 package tech.ada.product_microservice.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tech.ada.product_microservice.dto.ProductDTO;
 import tech.ada.product_microservice.model.Product;
 import tech.ada.product_microservice.service.ProductService;
 
@@ -42,7 +44,7 @@ public class ProductController {
 
     //POST - CREATE
     @PostMapping
-    public ResponseEntity<Product> create(@RequestBody Product product) {
+    public ResponseEntity<ProductDTO> create(@Valid @RequestBody ProductDTO product) {
         return ResponseEntity.status(HttpStatus.CREATED).body(this.productService.create(product));
     }
 

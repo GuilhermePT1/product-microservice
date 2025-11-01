@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import tech.ada.product_microservice.model.Product;
 import tech.ada.product_microservice.repository.ProductRepository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -67,5 +68,9 @@ public class ProductService {
 
     public Product searchBySku(Long sku) {
         return this.productRepository.searchBySku(sku).stream().findFirst().orElse(null);
+    }
+
+    public List<Product> searchProducts(String description, BigDecimal minPrice, BigDecimal maxPrice) {
+        return this.productRepository.searchProducts(description, minPrice, maxPrice);
     }
 }

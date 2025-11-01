@@ -10,6 +10,7 @@ import tech.ada.product_microservice.model.Product;
 import tech.ada.product_microservice.service.ProductService;
 
 import java.util.List;
+import java.math.BigDecimal;
 
 @RestController
 @RequestMapping("/products")
@@ -17,6 +18,12 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
+
+    //Filtrar por 3 tipos
+    @GetMapping
+    public ResponseEntity<List<Product>> searchProducts(@RequestParam String description, @RequestParam BigDecimal minPrice, @RequestParam BigDecimal maxPrice) {
+        return ResponseEntity.ok(this.productService.searchProducts(description, minPrice, maxPrice));
+    }
 
     @GetMapping
     public ResponseEntity<List<Product>> allProducts() {

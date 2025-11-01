@@ -39,4 +39,5 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     List<Product> searchBySku(@Param("sku") Long sku);
 
+    List<Product> searchProducts(String description, BigDecimal minPrice, BigDecimal maxPrice);
 }
